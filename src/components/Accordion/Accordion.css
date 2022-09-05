@@ -1,0 +1,37 @@
+.accordion-component {
+  border: 1px solid rgb(207, 207, 207);
+  border-radius: 5px;
+}
+
+.accordion-item__header,
+.accordion-item__content {
+  padding: 4px;
+}
+
+.accordion-item__content {
+  overflow: hidden;
+  height: 0;
+  padding: 0 10px;
+  transition: all ease-in-out 0.2s;
+}
+
+.accordion-item__content--visible {
+  height: auto;
+  padding: 10px;
+}
+
+.accordion-item__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  color: #fff;
+  background-color: rgb(149, 154, 187);
+  transition: all ease-in-out 0.2s;
+}
+.accordion-item__header:hover {
+  background-color: rgb(170, 176, 214);
+}
+.accordion-item__header svg {
+  margin-right: 5px; 
+}
