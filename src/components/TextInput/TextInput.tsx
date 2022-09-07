@@ -11,10 +11,10 @@ export interface TextInputProps {
 
 const TextInput = ({ label, name, type, placeholder }: TextInputProps) => {
   return (
-    <>
-      <label htmlFor={name} >{label}</label>
-      <input name={name} type={type} placeholder={placeholder} />
-    </>
+    <div className="mb-4">
+      <label className="block text-grey-700 text-sm font-bold mb-2" htmlFor={name} >{label}</label>
+      <input className="shadow appearance-none border rounded w-full py-2 px-3" name={name} type={type} placeholder={placeholder} />
+    </div>
   )
 }
 

@@ -10,4 +10,4 @@ const Template = (args) => <GrowButton {...args} />
 
 export const Default = Template.bind({});
 
-Default.args = { width: 60, height: 20 };
+Default.args = { width: 60, height: 20, growingrate: 5 };

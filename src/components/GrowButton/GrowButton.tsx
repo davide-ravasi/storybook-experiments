@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react'
 
+type GrowingRate = 1 | 2 | 3 | 4 | 5;
 
 interface GrowButtonProps {
   width: number;
   height: number;
+  growingrate: GrowingRate;
 }
 
-const GrowButton = ({ width, height }: GrowButtonProps) => {
+const GrowButton = ({ width, height, growingrate }: GrowButtonProps) => {
   const [grower, setGrower] = useState(0);
   const [course, setCourse] = useState(true);
   const maxSize = 20;
-  const growingRate = 5;
   let interval;
 
   useEffect(() => {
-    if (grower <= maxSize) {
-      interval = setInterval(() => {
-        setGrower(grower + growingRate);
-      }, 1000);
-    }
+    //if (Math.abs(grower) <= Math.abs(maxSize)) {
+    interval = setInterval(() => {
+      setGrower(grower + ((course ? 1 : -1) * growingrate));
+    }, 1000);
+    //}
 
     return () => clearInterval(interval);
   }, [grower, course]);
