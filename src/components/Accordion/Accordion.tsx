@@ -1,20 +1,30 @@
+import React from 'react'
 import { useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import "./Accordion.css";
 
-const Accordion = ({ data }) => {
-  const { id } = data;
+interface Data {
+  id: number;
+  title: string;
+  content: string;
+}
+
+interface AccordionProps {
+  data: Data[]
+}
+
+const Accordion = ({ data }: AccordionProps) => {
   return (
     <div className="accordion-component">
       {Array.isArray(data) &&
-        data.map(({ title, content }) => {
+        data.map(({ id, title, content }: Data) => {
           return <AccordionItem key={id} title={title} content={content} />;
         })}
     </div>
   );
 };
 
-const AccordionItem = ({ title, content }) => {
+const AccordionItem = ({ title, content }: Omit<Data, 'id'>) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -27,9 +37,8 @@ const AccordionItem = ({ title, content }) => {
         {active ? <FaArrowUp /> : <FaArrowDown />}
       </div>
       <div
-        className={`accordion-item__content ${
-          active ? "accordion-item__content--visible" : ""
-        }`}
+        className={`accordion-item__content ${active ? "accordion-item__content--visible" : ""
+          }`}
       >
         {content}
       </div>
