@@ -15,17 +15,17 @@ const GrowButton = ({ width, height, growingrate }: GrowButtonProps) => {
   let interval;
 
   useEffect(() => {
-    //if (Math.abs(grower) <= Math.abs(maxSize)) {
-    interval = setInterval(() => {
-      setGrower(grower + ((course ? 1 : -1) * growingrate));
-    }, 1000);
-    //}
+    if (Math.abs(grower) <= Math.abs(maxSize)) {
+      interval = setInterval(() => {
+        setGrower(grower + ((course ? 1 : -1) * growingrate));
+      }, 1000);
+    }
 
     return () => clearInterval(interval);
   }, [grower, course]);
 
   return (
-    <button onClick={() => setCourse(!course)} style={{ width: width + grower, height: height + grower }}>{course ? "growing" : "shrinking"}</button>
+    <button className="shadow appearance-none border rounded w-full py-2 px-3" onClick={() => setCourse(!course)} style={{ width: width + grower, height: height + grower }}>{course ? "growing" : "shrinking"}</button>
   )
 }
 
