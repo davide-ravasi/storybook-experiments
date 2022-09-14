@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import "./Accordion.css";
 
-interface Data {
+export interface Data {
   id: number;
   title: string;
   content: string;
@@ -30,6 +30,7 @@ const AccordionItem = ({ title, content }: Omit<Data, 'id'>) => {
   return (
     <div className="accordion-item">
       <div
+        role="button"
         className="accordion-item__header"
         onClick={() => setActive(!active)}
       >
@@ -37,6 +38,7 @@ const AccordionItem = ({ title, content }: Omit<Data, 'id'>) => {
         {active ? <FaArrowUp /> : <FaArrowDown />}
       </div>
       <div
+        role="region"
         className={`accordion-item__content ${active ? "accordion-item__content--visible" : ""
           }`}
       >
