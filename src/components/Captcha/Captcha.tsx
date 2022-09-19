@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const ONE =
   "https://images.pexels.com/photos/2249528/pexels-photo-2249528.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
@@ -17,30 +17,32 @@ const SIX =
 const Captcha = () => {
   const [captchaVisible, setCaptchaVisible] = useState(false);
   const [randomImg, setRandomImg] = useState(-1);
+  const [isRight, setIsRight] = useState(false);
 
   const btnCss = "inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out";
 
-  // useEffect(() => {
-  //   setRandomImg();
-  // });
-
   const setCaptcha = () => {
-    let maximum = 6;
-    let minimum = 1;
-    const maxmin = maximum - minimum + 1;
-    const rndmImg = Math.floor(Math.random() * maxmin) + minimum;
-    console.log(rndmImg);
-    setRandomImg(rndmImg);
-    setCaptchaVisible(true)
+    if (captchaVisible) {
+      setCaptchaVisible(false);
+    } else {
+      let maximum = 6;
+      let minimum = 1;
+      const maxmin = maximum - minimum + 1;
+      const rndmImg = Math.floor(Math.random() * maxmin) + minimum;
+
+      setRandomImg(rndmImg);
+      setCaptchaVisible(true)
+    }
+
   }
 
   const checkImgNumber = (number) => {
-    console.log(number);
+    randomImg === number ? setIsRight(true) : setIsRight(false);
   }
 
   return (
     <div>
-      <div className={`max-w-sm grid grid-cols-3 gap-4 ${!captchaVisible && 'hidden'}`}>
+      <div id="catpcha" data-testid="captcha" aria-hidden={captchaVisible ? false : true} className={`${captchaVisible ? 'grid grid-cols-3 gap-4' : 'hidden'} max-w-sm`}>
         <img alt="one" id="1" src={ONE} onClick={() => checkImgNumber(1)} />
         <img alt="2" id="2" src={TWO} onClick={() => checkImgNumber(2)} />
         <img alt="3" id="3" src={THREE} onClick={() => checkImgNumber(3)} />
@@ -48,7 +50,8 @@ const Captcha = () => {
         <img alt="5" id="5" src={FIVE} onClick={() => checkImgNumber(5)} />
         <img alt="6" id="6" src={SIX} onClick={() => checkImgNumber(6)} />
       </div>
-      <button className={btnCss} onClick={() => setCaptcha()}>I'm not a Robot</button>
+      <div data-testid="results">{isRight ? "yes is right!!!" : "It's not right man !!!"}</div>
+      <button type="button" className={btnCss} onClick={() => setCaptcha()}>I'm not a Robot</button>
     </div>)
 };
 
