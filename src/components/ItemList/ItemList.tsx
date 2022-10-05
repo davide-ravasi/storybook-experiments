@@ -40,42 +40,49 @@ const Form = ({ itemList, setItemList }) => {
     }
 
     if (itemValue <= 0) {
-      setErrorMsg("the price must be > 0");
+      setErrorMsg("The price must be > 0");
       return false;
     }
 
-    setItemList([...itemList, { name: itemName, value: itemValue }]);
+    setItemList([...itemList, { id: Math.floor(Math.random() * 10) + 1, idname: itemName, value: itemValue }]);
   }
 
   return (
     <form onSubmit={(e) => addItemList(e)}>
-      <input name="itemname" className={inputCss} type="text" value={itemName} onChange={(e) => setItemName(e.target.value)} placeholder="Insert the name" />
-      <input name="itemvalue" className={inputCss} type="number" value={itemValue} onChange={(e) => setItemValue(parseFloat(e.target.value))} placeholder="Insert the price" />
+      <label htmlFor="itemname">Insert the name</label>
+      <input id="itemname" name="itemname" className={inputCss} type="text" value={itemName} onChange={(e) => setItemName(e.target.value)} placeholder="Insert the name" />
+      <label htmlFor="itemvalue">Insert the price</label>
+      <input id="itemvalue" name="itemvalue" className={inputCss} type="number" value={itemValue} onChange={(e) => setItemValue(parseFloat(e.target.value))} placeholder="Insert the price" />
       <button className={buttonCss} type="submit">Insert</button>
-      <div className="error_message py-4 text-red-600 font-bold">{errorMsg}</div>
+      <div className="error_message py-4 text-red-600 font-bold" role="alert">{errorMsg}</div>
     </form>
   )
 }
 
 const ItemValueList = ({ itemList, setItemList }) => {
-  const removeItem = (id) => {
-    console.log(id);
+  const removeItem = (id: number) => {
     setItemList(itemList.filter(item => item.id !== id));
   }
 
   return (
-    <>
-      {
-        itemList.length && itemList.map((item) => {
-          return (<div key={item.id} className="item flex w-2/3">
-            <div className="item__name flex-auto w-64">{item.name}</div>
-            <div className="item__price flex-auto w-64">{formatValue(item.value)}</div>
-            <div className="item__close" onClick={() => removeItem(item.id)}>X</div>
-          </div>);
+    <div className="item-list-wrapper">
+      <h1 id="items-heading">Item List</h1>
+      <ul aria-labelledby="items-heading" className="item">
+        {
+          itemList.length && itemList.map((item) => {
+            return (
+              <li key={item.id} className="flex w-2/3">
+                <span className="item__name flex-auto w-64">{item.id}</span>
+                <span className="item__name flex-auto w-64">{item.name}</span>
+                <span className="item__price flex-auto w-64">{formatValue(item.value)}</span>
+                <span><button data-testId={'remove-' + item.id} className="item__close" onClick={() => removeItem(item.id)}>X</button></span>
+              </li>
+            );
+          }
+          )
         }
-        )
-      }
-    </>
+      </ul>
+    </div>
   )
 };
 
