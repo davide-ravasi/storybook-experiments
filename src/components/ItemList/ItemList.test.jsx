@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  screen,
-  render,
-  within,
-  fireEvent,
-  getByTestId,
-} from "@testing-library/react";
+import { screen, render, within, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import ItemList from "./ItemList";

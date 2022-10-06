@@ -87,10 +87,3 @@ const ItemValueList = ({ itemList, setItemList }) => {
 };
 
 export default ItemList;
-
-
-/*
-- both fields are populated before the user can submit their entry. 
-- do not allow number values less than zero or more precise than two digits after the decimal. 
-- In the value column, append a dollar sign before each number.
-*/
