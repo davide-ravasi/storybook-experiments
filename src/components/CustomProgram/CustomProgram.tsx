@@ -33,7 +33,6 @@ const CustomProgram = () => {
     let value = initialProgramValue;
     sequence.forEach((el: string) => {
       value = eval(`${el}(${value})`);
-      console.log(value);
     })
 
     setfinalProgramValue(value);
