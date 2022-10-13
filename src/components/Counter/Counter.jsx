@@ -14,7 +14,7 @@ export default function Counter({ color }) {
 
   return (
     <div>
-      <p>Counter: {counter}</p>
+      <p data-testid="counter">Counter: {counter}</p>
       <Button
         onClick={() => onClickCounter("ADD")}
         label="+"
