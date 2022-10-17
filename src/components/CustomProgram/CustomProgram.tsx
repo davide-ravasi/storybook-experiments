@@ -40,7 +40,7 @@ const CustomProgram = () => {
 
   return (
     <div>
-      <div className="flex mb-4">
+      <div data-testid="button-wrapper" className="flex mb-4">
         <button className={buttonCss} type="button" onClick={() => addFunction("half")}>Half</button>
         <button className={buttonCss} type="button" onClick={() => addFunction("double")}>Double</button>
         <button className={buttonCss} type="button" onClick={() => addFunction("increment")}>Increment</button>
@@ -48,14 +48,15 @@ const CustomProgram = () => {
         <button className={buttonCss} type="button" onClick={() => clearFunctions()}>Clear</button>
       </div>
       <div className="mb-8 text-center">
-        <h1>My Function</h1>
-        {(sequence.length !== 0) ? <ul>
+        <h1 id="function-list-heading">My Function</h1>
+        {(sequence.length !== 0) ? <ul aria-labelledby="function-list-heading">
           {sequence.map((el) => <li>{el}</li>)}
-        </ul> : <p>no sequence available</p>}
+        </ul> : <p data-testid="no-functions-text">no sequence available</p>}
       </div>
       <div className="">
         <form onSubmit={(e) => submitForm(e)}>
-          <input className={inputCss} type="number" value={initialProgramValue} onChange={(e) => changeNumber(e)} />
+          <label htmlFor="initialValue">Insert initial value</label>
+          <input id="initialValue" className={inputCss} type="number" value={initialProgramValue} onChange={(e) => changeNumber(e)} />
           <button className={buttonCss} type="submit">Submit</button>
         </form>
       </div>
