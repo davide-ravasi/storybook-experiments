@@ -50,7 +50,7 @@ const CustomProgram = () => {
       <div className="mb-8 text-center">
         <h1 id="function-list-heading">My Function</h1>
         {(sequence.length !== 0) ? <ul aria-labelledby="function-list-heading">
-          {sequence.map((el) => <li>{el}</li>)}
+          {sequence.map((el, index) => <li key={index}>{el}</li>)}
         </ul> : <p data-testid="no-functions-text">no sequence available</p>}
       </div>
       <div className="">
@@ -61,7 +61,7 @@ const CustomProgram = () => {
         </form>
       </div>
       <div className="mt-4 text-center">
-        <h2>{initialProgramValue ? initialProgramValue : '?'} {'->'} function {'->'} {finalProgramValue ? finalProgramValue : '?'}</h2>
+        <h2 data-testid="program-results">{initialProgramValue ? initialProgramValue : '?'} {'->'} function {'->'} {finalProgramValue ? finalProgramValue : '?'}</h2>
       </div>
     </div>
   )
