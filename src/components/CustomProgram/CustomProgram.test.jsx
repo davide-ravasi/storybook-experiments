@@ -35,7 +35,7 @@ describe("Custom program component", () => {
   it("test values initial values shoud be present", () => {
     render(<CustomProgram />);
 
-    const testValues = screen.queryByText("? -> function -> ?");
+    const testValues = screen.queryByText("? -> My Function -> ?");
     expect(testValues).toBeInTheDocument();
   });
 
@@ -49,8 +49,8 @@ describe("Custom program component", () => {
 
     fireEvent.change(inputText, { target: { value: "2" } });
 
-    const testValues = screen.getByTestId("program-results");
-    expect(testValues).toHaveTextContent("2 -> function -> ?");
+    //const testValues = screen.getByTestId("program-results");
+    //expect(testValues).toHaveTextContent("2 -> function -> ?");
 
     // insert sequence and check snapshot
     const halfBtn = screen.getByRole("button", { name: "Half" });
@@ -75,5 +75,12 @@ describe("Custom program component", () => {
     `);
 
     // execute program and check results
+    const submitBtn = screen.getByRole("button", { name: "Submit" });
+    userEvent.click(submitBtn);
+    const testValues = screen.getByTestId("program-results");
+    expect(testValues).toHaveTextContent("2 -> My Function -> 3");
+    const noFnsText = screen.queryByTestId("no-functions-text");
+    expect(noFnsText).toBeInTheDocument();
+    expect(noFnsText).toHaveTextContent("no sequence available");
   });
 });

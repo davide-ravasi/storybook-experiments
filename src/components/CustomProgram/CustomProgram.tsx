@@ -7,7 +7,7 @@ const decrement = (number) => number - 1;
 
 const CustomProgram = () => {
   const [initialProgramValue, setInitialProgramValue] = useState(0);
-  const [finalProgramValue, setfinalProgramValue] = useState(0);
+  const [programState, setProgramState] = useState('? -> My Function -> ?');
   const [sequence, setSequence] = useState<string[]>([]);
 
   const inputCss = "shadow appearance-none border rounded w-full my-1 py-2 px-3";
@@ -35,7 +35,9 @@ const CustomProgram = () => {
       value = eval(`${el}(${value})`);
     })
 
-    setfinalProgramValue(value);
+    setSequence([]);
+    setProgramState(initialProgramValue + ' -> My Function -> ' + value)
+    setInitialProgramValue(0);
   }
 
   return (
@@ -61,7 +63,7 @@ const CustomProgram = () => {
         </form>
       </div>
       <div className="mt-4 text-center">
-        <h2 data-testid="program-results">{initialProgramValue ? initialProgramValue : '?'} {'->'} function {'->'} {finalProgramValue ? finalProgramValue : '?'}</h2>
+        <h2 data-testid="program-results">{programState}</h2>
       </div>
     </div>
   )
@@ -71,6 +73,5 @@ export default CustomProgram;
 
 
 /*
-The first four buttons are numeric operations that the user may add to their program sequence (half, double, increment, decrement), and the corresponding functions are provided in the starter code. When a button is pressed, its operation should be added to the end of the user’s program.
-As you may have been able to infer from the image, the component should leave the user’s function as is but clear the starting value after the user selects submit and their program runs.
+https://medium.com/@justin.sherman/react-coding-interview-challenge-17-cf0497674b23
 */
