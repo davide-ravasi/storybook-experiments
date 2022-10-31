@@ -10,4 +10,7 @@ const Template = (args) => <Pagination {...args} />;
 
 export const Default = Template.bind({});
 
-Default.args = {};
+Default.args = {
+  totalItems: 19,
+  itemsPage: 5,
+};
