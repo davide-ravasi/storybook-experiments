@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import './Pagination.css';
 
-const Pagination = ({ totalItems, itemsPage }) => {
+interface PaginationProps {
+  totalItems: number;
+  itemsPage: number;
+}
+
+const Pagination = ({ totalItems = 10, itemsPage = 5 }: PaginationProps) => {
   const url = 'https://randomuser.me/api?results=' + totalItems;
   const itemsPerPage = itemsPage;
   const [actualPage, setActualPage] = useState(1);
@@ -28,8 +33,14 @@ const Pagination = ({ totalItems, itemsPage }) => {
   )
 };
 
+interface PagingProps {
+  itemsAmount: number;
+  itemsPerPage: number;
+  actualPage: number;
+  setActualPage: number;
+}
 
-const Paging = ({ itemsAmount, itemsPerPage, actualPage, setActualPage }) => {
+const Paging = ({ itemsAmount, itemsPerPage, actualPage, setActualPage }: PagingProps) => {
   const [pages, setPages] = useState(0);
 
   const setNewPage = (page: number) => {
@@ -54,9 +65,16 @@ const Paging = ({ itemsAmount, itemsPerPage, actualPage, setActualPage }) => {
   )
 }
 
+
+interface PageProps {
+  content: any,
+  itemsPerPage: number;
+  actualPage: number;
+}
+
 // generic component for displaying table from array
 // of objects where fields of objects are columns
-const Pages = ({ content, itemsPerPage, actualPage }) => {
+const Pages = ({ content, itemsPerPage, actualPage }: PageProps) => {
   const [pageContent, setPageContent] = useState([]);
 
   useEffect(() => {
