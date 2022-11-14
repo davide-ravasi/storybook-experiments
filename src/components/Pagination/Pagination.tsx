@@ -37,7 +37,7 @@ interface PagingProps {
   itemsAmount: number;
   itemsPerPage: number;
   actualPage: number;
-  setActualPage: number;
+  setActualPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Paging = ({ itemsAmount, itemsPerPage, actualPage, setActualPage }: PagingProps) => {
