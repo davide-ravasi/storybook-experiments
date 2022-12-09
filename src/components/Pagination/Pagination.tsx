@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import './Pagination.css';
 
-interface PaginationProps {
+interface IPaginationProps {
   totalItems: number;
   itemsPage: number;
 }
 
-const Pagination = ({ totalItems = 10, itemsPage = 5 }: PaginationProps) => {
+const Pagination = ({ totalItems = 10, itemsPage = 5 }: IPaginationProps) => {
   const url = 'https://randomuser.me/api?results=' + totalItems;
   const itemsPerPage = itemsPage;
   const [actualPage, setActualPage] = useState(1);
@@ -33,14 +33,14 @@ const Pagination = ({ totalItems = 10, itemsPage = 5 }: PaginationProps) => {
   )
 };
 
-interface PagingProps {
+interface IPagingProps {
   itemsAmount: number;
   itemsPerPage: number;
   actualPage: number;
   setActualPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Paging = ({ itemsAmount, itemsPerPage, actualPage, setActualPage }: PagingProps) => {
+const Paging = ({ itemsAmount, itemsPerPage, actualPage, setActualPage }: IPagingProps) => {
   const [pages, setPages] = useState(0);
 
   const setNewPage = (page: number) => {
@@ -53,20 +53,22 @@ const Paging = ({ itemsAmount, itemsPerPage, actualPage, setActualPage }: Paging
   }, [itemsAmount, itemsPerPage]);
 
   return (
-    <ul className="paging">
-      {pages && [...Array(pages)].map((page, index) => {
-        const pageNumber = index + 1;
+    <>
+      <ul className="paging" aria-label="Navigate between the pages">
+        {pages && [...Array(pages)].map((page, index) => {
+          const pageNumber = index + 1;
 
-        return (
-          <li onClick={() => setNewPage(pageNumber)} className={actualPage === pageNumber && 'current'}>{pageNumber}</li>
-        )
-      })}
-    </ul>
+          return (
+            <li onClick={() => setNewPage(pageNumber)} className={actualPage === pageNumber && 'current'}>{pageNumber}</li>
+          )
+        })}
+      </ul>
+    </>
   )
 }
 
 
-interface PageProps {
+interface IPageProps {
   content: any,
   itemsPerPage: number;
   actualPage: number;
@@ -74,7 +76,7 @@ interface PageProps {
 
 // generic component for displaying table from array
 // of objects where fields of objects are columns
-const Pages = ({ content, itemsPerPage, actualPage }: PageProps) => {
+const Pages = ({ content, itemsPerPage, actualPage }: IPageProps) => {
   const [pageContent, setPageContent] = useState([]);
 
   useEffect(() => {
@@ -86,6 +88,7 @@ const Pages = ({ content, itemsPerPage, actualPage }: PageProps) => {
 
   return (
     <table>
+      <caption>Names list:</caption>
       <thead>
         <tr>
           <th>First Name</th>
