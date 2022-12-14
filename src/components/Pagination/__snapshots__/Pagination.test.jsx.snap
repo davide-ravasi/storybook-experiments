@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Custom program component check change pages 1`] = `
+<table>
+  <caption>
+    Names list:
+  </caption>
+  <thead>
+    <tr>
+      <th>
+        First Name
+      </th>
+      <th>
+        LastName
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Lucien
+      </td>
+      <td>
+        Aubert
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Alisha
+      </td>
+      <td>
+        Rodriguez
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;

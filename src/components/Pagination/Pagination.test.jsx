@@ -1,11 +1,11 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import Pagination from "./Pagination";
 
 describe("Custom program component", () => {
   it("list elements should be presents", async () => {
-    render(<Pagination totalItems="20" itemsPage="5" />);
+    render(<Pagination totalItems="4" itemsPage="2" />);
 
     // check the list
     const listNames = await screen.findByRole("table", { name: "Names list:" });
@@ -16,11 +16,11 @@ describe("Custom program component", () => {
     const items = await findAllByRole("columnheader");
     expect(items.length).toBe(2);
     const items2 = await findAllByRole("cell");
-    expect(items2.length).toBe(28);
+    expect(items2.length).toBe(6);
   });
 
   it("paging elements should be presents", async () => {
-    render(<Pagination totalItems="20" itemsPage="5" />);
+    render(<Pagination totalItems="4" itemsPage="2" />);
 
     // check the pagination
     const listPages = await screen.findByRole("list", {
@@ -31,7 +31,7 @@ describe("Custom program component", () => {
     // check elements in pagination
     const { findAllByRole } = within(listPages);
     const listPagesItems = await findAllByRole("listitem");
-    expect(listPagesItems.length).toBe(4);
+    expect(listPagesItems.length).toBe(2);
 
     // check selected elements in pagination at start
     expect(listPagesItems[0]).toHaveClass("current");
@@ -39,7 +39,7 @@ describe("Custom program component", () => {
   });
 
   it("check change pages", async () => {
-    render(<Pagination totalItems="20" itemsPage="5" />);
+    render(<Pagination totalItems="4" itemsPage="2" />);
 
     const listPages = await screen.findByRole("list", {
       name: "Navigate between the pages",
@@ -56,6 +56,9 @@ describe("Custom program component", () => {
     // check clicked element in pagination
     expect(listPageTwo).toHaveClass("current");
 
+    const listNames = await screen.findByRole("table", { name: "Names list:" });
+
     // mock datas
+    expect(listNames).toMatchSnapshot();
   });
 });
