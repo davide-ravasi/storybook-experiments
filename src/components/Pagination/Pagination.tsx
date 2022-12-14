@@ -22,7 +22,7 @@ const Pagination = ({ totalItems = 10, itemsPage = 5 }: IPaginationProps) => {
     }
 
     fetchList();
-  }, []);
+  }, [url]);
 
 
   return (
