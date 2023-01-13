@@ -24,28 +24,32 @@ const buttonCss = "inline-block my-3 px-6 py-2.5 bg-blue-600 text-white font-med
 }
 */
 
+type User = {
+  name: string,
+  followers: string[]
+}
+
 const Followers = () => {
   const [list, setList] = useState([]);
-
   const setNewName = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     e.preventDefault();
-
-    if (!list.find(user => user.name !== name)) { // name present in list
-      const newList = [...list, { name: name, followers: [] }];
-      setList(newList);
+    console.log(list);
+    if (!list.find(user => user.name === name)) { // name present in list
+      setList([...list, { name: name, followers: [] }]);
     }
   }
 
   const addFollower = (e: React.FormEvent<HTMLFormElement>, follower, followed) => {
     e.preventDefault();
-
-    console.log(follower + " " + followed);
+    const followedData = list.find(user => user.name === followed);
+    followedData.followers.push(follower);
+    setList([...list, followedData]);
   }
 
   return <div>
     <InsertName setNewName={setNewName} />
     <ListNames list={list} />
-    <FollowName addFollower={addFollower} listNames={list} />
+    {/* <FollowName addFollower={addFollower} listNames={list} /> */}
   </div>;
 };
 
@@ -62,7 +66,7 @@ const InsertName = ({ setNewName }) => {
 const ListNames = ({ list }) => {
   return (
     <ul>
-      {list && list.map((user, index: number) => {
+      {list && Object.values(list).map((user: User, index: number) => {
         return <li key={'list' + user.name + index}>{user.name}</li>
       })}
     </ul>
