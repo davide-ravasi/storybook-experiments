@@ -39,17 +39,18 @@ const Followers = () => {
     }
   }
 
-  const addFollower = (e: React.FormEvent<HTMLFormElement>, follower, followed) => {
+  const addFollower = (e: React.FormEvent<HTMLFormElement>, follower: string, followed: string) => {
     e.preventDefault();
-    const followedData = list.find(user => user.name === followed);
+    const newList = [...list];
+    const followedData = newList.find(user => user.name === followed);
     followedData.followers.push(follower);
-    setList([...list, followedData]);
+    setList(newList);
   }
 
   return <div>
     <InsertName setNewName={setNewName} />
     <ListNames list={list} />
-    {/* <FollowName addFollower={addFollower} listNames={list} /> */}
+    <FollowName addFollower={addFollower} list={list} />
   </div>;
 };
 
@@ -73,7 +74,7 @@ const ListNames = ({ list }) => {
   )
 }
 
-const FollowName = ({ addFollower, listNames }) => {
+const FollowName = ({ addFollower, list }) => {
   const [follower, setFollower] = useState("");
   const [followed, setFollowed] = useState("");
 
@@ -81,15 +82,15 @@ const FollowName = ({ addFollower, listNames }) => {
     <form className="mt-5" onSubmit={(e) => addFollower(e, follower, followed)}>
       <select name="follower" id="follower" className={inputCss + ' w-2/5'} onChange={(e) => { console.log(e.target.value); setFollower(e.target.value) }}>
         <option value="">Choose the name</option>
-        {listNames.map(name => {
-          return <option value={name}>{name}</option>
+        {list && Object.values(list).map((user: User) => {
+          return <option value={user.name}>{user.name}</option>
         })}
       </select>
       <span className="inline-block w-1/5 text-center">follow</span>
       <select name="followed" id="followed" className={inputCss + ' w-2/5'} onChange={(e) => setFollowed(e.target.value)}>
         <option value="">Choose the name</option>
         {
-          listNames.filter(name => name !== follower).map(name => <option value={name}>{name}</option>)
+          list && Object.values(list).filter((user: User) => user.name !== follower).map((user: User) => <option value={user.name}>{user.name}</option>)
         }
       </select>
       <button className={buttonCss + ' mt-5'} type="submit">Submit</button>
