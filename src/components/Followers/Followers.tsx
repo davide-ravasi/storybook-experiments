@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./Followers.css";
 
@@ -11,17 +11,8 @@ const buttonCss = "inline-block my-3 px-6 py-2.5 bg-blue-600 text-white font-med
   - data type to include followers
     ex: 
   - add follow function
-
-{
-  {
-    name: paolo,
-    followers: []
-  },
-  {
-    name: andrea,
-    followers: []
-  }
-}
+  - clean inputs when submit
+  - on hover show followers of a followed
 */
 
 type User = {
@@ -56,10 +47,14 @@ const Followers = () => {
 
 const InsertName = ({ setNewName }) => {
   const [name, setName] = useState("");
+  const handleOnSubmit = (e, name) => {
+    setNewName(e, name);
+    setName("");
+  }
 
   return (
-    <form onSubmit={(e) => setNewName(e, name)}>
-      <input type="text" id="name" className={inputCss} name="name" onChange={(e) => setName(e.target.value)} />
+    <form onSubmit={(e) => handleOnSubmit(e, name)}>
+      <input type="text" id="name" className={inputCss} name="name" value={name} onChange={(e) => setName(e.target.value)} />
     </form>
   )
 }
@@ -77,17 +72,22 @@ const ListNames = ({ list }) => {
 const FollowName = ({ addFollower, list }) => {
   const [follower, setFollower] = useState("");
   const [followed, setFollowed] = useState("");
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>, follower: string, followed: string) => {
+    addFollower(e, follower, followed);
+    setFollower("");
+    setFollowed("");
+  }
 
   return (
-    <form className="mt-5" onSubmit={(e) => addFollower(e, follower, followed)}>
-      <select name="follower" id="follower" className={inputCss + ' w-2/5'} onChange={(e) => { console.log(e.target.value); setFollower(e.target.value) }}>
+    <form className="mt-5" onSubmit={(e) => handleOnSubmit(e, follower, followed)}>
+      <select name="follower" id="follower" value={follower} className={inputCss + ' w-2/5'} onChange={(e) => { console.log(e.target.value); setFollower(e.target.value) }}>
         <option value="">Choose the name</option>
         {list && Object.values(list).map((user: User) => {
           return <option value={user.name}>{user.name}</option>
         })}
       </select>
       <span className="inline-block w-1/5 text-center">follow</span>
-      <select name="followed" id="followed" className={inputCss + ' w-2/5'} onChange={(e) => setFollowed(e.target.value)}>
+      <select name="followed" id="followed"  value={followed} className={inputCss + ' w-2/5'} onChange={(e) => setFollowed(e.target.value)}>
         <option value="">Choose the name</option>
         {
           list && Object.values(list).filter((user: User) => user.name !== follower).map((user: User) => <option value={user.name}>{user.name}</option>)
