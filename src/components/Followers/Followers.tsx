@@ -6,15 +6,6 @@ const inputCss = "shadow appearance-none border rounded w-full my-1 py-2 px-3";
 
 const buttonCss = "inline-block my-3 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full";
 
-/*
-  - add types
-  - data type to include followers
-    ex: 
-  - add follow function
-  - clean inputs when submit
-  - on hover show followers of a followed
-*/
-
 type User = {
   name: string,
   followers: string[]
@@ -60,10 +51,16 @@ const InsertName = ({ setNewName }) => {
 }
 
 const ListNames = ({ list }) => {
+  const showFollowers = (user) => {
+    const followersList = user.followers.length ? user.followers.join(", ") : 'nobody';
+    const verbPluralize = user.followers.length > 1 ? 'are' : 'is';
+    const followersAnswer = user.name + " followers " + verbPluralize + " " + followersList;
+    alert(followersAnswer);
+  }
   return (
     <ul>
       {list && Object.values(list).map((user: User, index: number) => {
-        return <li key={'list' + user.name + index}>{user.name}</li>
+        return <li key={'list' + user.name + index} onClick={(e) => showFollowers(user)}>{user.name}</li>
       })}
     </ul>
   )
@@ -87,7 +84,7 @@ const FollowName = ({ addFollower, list }) => {
         })}
       </select>
       <span className="inline-block w-1/5 text-center">follow</span>
-      <select name="followed" id="followed"  value={followed} className={inputCss + ' w-2/5'} onChange={(e) => setFollowed(e.target.value)}>
+      <select name="followed" id="followed" value={followed} className={inputCss + ' w-2/5'} onChange={(e) => setFollowed(e.target.value)}>
         <option value="">Choose the name</option>
         {
           list && Object.values(list).filter((user: User) => user.name !== follower).map((user: User) => <option value={user.name}>{user.name}</option>)
