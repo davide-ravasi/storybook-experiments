@@ -39,12 +39,13 @@ Default.args = {
 };
 
 /*
- - add a header prop in config
- - add an if  in rendered headers render functionù
- - add fragment for key
- - add getSortValue in config
- - create sortable table HOC SortableTable
- - new config:
+  - add possibility to have a table and a sortable table
+  - add a header prop in config
+  - add an if  in rendered headers render function
+  - add fragment for key
+  - add sortValue in config
+  - create sortable table HOC SortableTable
+  - new config:
     {
       label: 'Score'
       render: (fruit) => fruit.score
