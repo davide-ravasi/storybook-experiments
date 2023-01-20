@@ -22,6 +22,7 @@ Default.args = {
       label: "Name of Fruit",
       name: "name",
       render: (fruit) => fruit.name,
+      sortable: true,
     },
     {
       label: "Color",
@@ -32,6 +33,7 @@ Default.args = {
       label: "Score",
       name: "score",
       render: (fruit) => fruit.score,
+      sortable: true,
     },
   ],
 };

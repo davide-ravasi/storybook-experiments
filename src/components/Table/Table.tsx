@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { sortAndDeduplicateDiagnostics } from "typescript";
+import React, { useState } from "react";
 
 import "./Table.css";
 
@@ -13,6 +12,7 @@ export interface configElType {
   label: string;
   name: string;
   render: (el: any) => React.ReactNode;
+  sortable: boolean;
 }
 
 interface ITableProps {
@@ -38,7 +38,18 @@ const Table = ({ data, config }: ITableProps) => {
   }
 
   const renderedHeaders = config.map(column => {
-    return <th key={column.label}><span onClick={() => sortList('asc', column.name)}>asc</span><span onClick={() => sortList('desc', column.name)}>desc</span>{column.label}</th>
+    const { label, name, sortable } = column;
+    return (
+      <th key={label}>
+        {sortable &&
+          <>
+            <span onClick={() => sortList('asc', name)}>asc</span>
+            <span onClick={() => sortList('desc', name)}>desc</span>
+          </>
+        }
+        {column.label}
+      </th>
+    )
   })
 
   const renderedRows =
