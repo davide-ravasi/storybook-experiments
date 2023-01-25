@@ -41,21 +41,32 @@ const SortableTable = ({ config, data }) => {
     setDataList(newDataList);
   }
 
-  return <Table config={config} dataList={dataList} sortList={sortList} />
+  const header = (name) => (
+    <>
+      <span onClick={() => sortList('asc', name)}>asc</span>
+      <span onClick={() => sortList('desc', name)}>desc</span>
+    </>
+  )
+
+  const newConfig = config.map(colHeader => {
+    if (colHeader.sortValue) {
+      colHeader.header = header;
+    }
+
+    return colHeader;
+  })
+
+  return <Table config={newConfig} dataList={dataList} />
 }
 
-const Table = ({ config, dataList, sortList }) => {
 
+// remove fn sortList and add it to sortableTable
+const Table = ({ config, dataList }) => {
   const renderedHeaders = config.map(column => {
-    const { label, name, sortValue } = column;
+    const { label, name, header } = column;
     return (
       <th key={label}>
-        {sortValue &&
-          <>
-            <span onClick={() => sortList('asc', name)}>asc</span>
-            <span onClick={() => sortList('desc', name)}>desc</span>
-          </>
-        }
+        {header && header(name)}
         {column.label}
       </th>
     )
