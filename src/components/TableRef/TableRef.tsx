@@ -20,12 +20,13 @@ interface ITableProps {
   config: configElType[];
 }
 
-
+// test if table work without sortable component
 const TableRef = ({ data, config }: ITableProps) => {
   return <SortableTable config={config} data={data} />;
 };
 
-const SortableTable = ({ config, data }) => {
+const SortableTable = (props) => {
+  const { config, data } = props;
   const [dataList, setDataList] = useState(data);
 
   const sortList = (order, colName) => {
@@ -48,15 +49,18 @@ const SortableTable = ({ config, data }) => {
     </>
   )
 
-  const newConfig = config.map(colHeader => {
-    if (colHeader.sortValue) {
-      colHeader.header = header;
+  const newConfig = config.map(column => {
+    if (!column.sortValue) {
+      return column;
     }
 
-    return colHeader;
+    return {
+      ...column,
+      header
+    }
   })
 
-  return <Table config={newConfig} dataList={dataList} />
+  return <Table dataList={dataList} config={newConfig} />
 }
 
 
