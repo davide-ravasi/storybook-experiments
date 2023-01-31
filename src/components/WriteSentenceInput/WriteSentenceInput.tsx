@@ -1,6 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./WriteSentenceInput.css";
+
+const WriteInterval = (arr: string[]) => {
+  // const [sentence, setSentence] = useState("");
+  console.log(arr);
+  //useEffect(() => {
+  let count = 0;
+  const interval = setInterval(() => {
+    //setSentence(arr[count]);
+    console.log(arr[count]);
+    count++;
+
+    if (count === arr.length - 1) clearInterval(interval);
+  }, 1000);
+  //return () => clearInterval(interval);
+  //}, [arr]);
+
+  return "prova";
+}
 
 const WriteSentenceInput = () => {
   const [inputValue, setInputValue] = useState("");
@@ -10,13 +28,10 @@ const WriteSentenceInput = () => {
     setInputValue(e.target.value);
   }
 
-  // const interval = setInterval(() => {
-  //   console.log('This will run every second!');
-  // }, 1000);
-
   const onSubmit = (e) => {
     e.preventDefault();
-    setFinalSentence(inputValue);
+    // WriteInterval(inputValue.split(" "));
+    setFinalSentence(WriteInterval(inputValue.split(" ")));
   }
 
   return (
