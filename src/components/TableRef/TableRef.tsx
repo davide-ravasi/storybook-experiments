@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./TableRef.css";
 
@@ -21,31 +21,45 @@ interface ITableProps {
 }
 
 // test if table work without sortable component
+// add function to render asc-desc-reset values
 const TableRef = ({ data, config }: ITableProps) => {
   return <SortableTable config={config} data={data} />;
 };
 
 const SortableTable = (props) => {
   const { config, data } = props;
-  const [dataList, setDataList] = useState(data);
+  const [sortDirection, setSortDirection] = useState('');
+  const [colName, setColName] = useState('');
+  const [dataList, setDataList] = useState([]);
+
+  useEffect(() => {
+    if (sortDirection === '') setDataList(data);
+  }, [sortDirection, data]);
 
   const sortList = (order, colName) => {
-    const orderList = order === 'asc' ? 1 : -1;
-    const newDataList = [...dataList].sort((a, b) => {
-      if (typeof a[colName] === 'string') {
-        return a[colName].localeCompare(b[colName]) * orderList;
-      } else {
-        return (a[colName] - b[colName]) * orderList;
-      }
-    })
+    setSortDirection(order);
+    setColName(colName);
 
-    setDataList(newDataList);
+    if (order) {
+      const orderList = order === 'asc' ? 1 : -1;
+      const newDataList = [...dataList].sort((a, b) => {
+        if (typeof a[colName] === 'string') {
+          return a[colName].localeCompare(b[colName]) * orderList;
+        } else {
+          return (a[colName] - b[colName]) * orderList;
+        }
+      })
+
+      setDataList(newDataList);
+    }
   }
 
+  // find a way to set col name
   const header = (name) => (
     <>
-      <span onClick={() => sortList('asc', name)}>asc</span>
-      <span onClick={() => sortList('desc', name)}>desc</span>
+      {sortDirection !== 'asc' && <span onClick={() => { sortList('asc', name) }}>asc</span>}
+      {sortDirection !== 'desc' && <span onClick={() => { sortList('desc', name) }}> desc</span >}
+      <span onClick={() => { sortList('', name) }}> reset</span >
     </>
   )
 
@@ -63,8 +77,6 @@ const SortableTable = (props) => {
   return <Table dataList={dataList} config={newConfig} />
 }
 
-
-// remove fn sortList and add it to sortableTable
 const Table = ({ config, dataList }) => {
   const renderedHeaders = config.map(column => {
     const { label, name, header } = column;

@@ -6,17 +6,27 @@ const WriteSentenceInput = () => {
   const [inputValue, setInputValue] = useState("");
   const [finalSentence, setFinalSentence] = useState("");
 
+  let interval;
+
   const setOnChange = (e) => {
     setInputValue(e.target.value);
   }
 
-  // const interval = setInterval(() => {
-  //   console.log('This will run every second!');
-  // }, 1000);
+  const writeFinalSentence = () => {
+    const arrSentence = inputValue.split(" ");
+    let counter = 0;
+    let newSentence = '';
+
+    interval = setInterval(() => {
+      newSentence = newSentence + ' ' + arrSentence[counter];
+      arrSentence[counter] ? setFinalSentence(newSentence) : clearInterval(interval);
+      counter++;
+    }, 1000);
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setFinalSentence(inputValue);
+    writeFinalSentence();
   }
 
   return (
