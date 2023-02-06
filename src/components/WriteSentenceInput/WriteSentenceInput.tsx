@@ -19,9 +19,9 @@ const WriteSentenceInput = () => {
 
     interval = setInterval(() => {
       newSentence = newSentence + ' ' + arrSentence[counter];
-      arrSentence[counter] ? setFinalSentence(newSentence) : clearInterval(interval);
+      arrSentence[counter] ? setFinalSentence(newSentence.trim()) : clearInterval(interval);
       counter++;
-    }, 1000);
+    }, 500);
   }
 
   const onSubmit = (e) => {
@@ -31,10 +31,10 @@ const WriteSentenceInput = () => {
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <form data-testid="form" onSubmit={onSubmit}>
         <input className="shadow appearance-none border rounded w-full py-2 px-3" type="text" value={inputValue} onChange={setOnChange} />
       </form>
-      <div>{finalSentence}</div>
+      <div data-testid="final-sentence-wrapper">{finalSentence}</div>
     </div>
   )
 }
