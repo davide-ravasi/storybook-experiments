@@ -55,13 +55,24 @@ const SortableTable = (props) => {
   }
 
   // find a way to set col name
-  const header = (name) => (
-    <>
-      {sortDirection !== 'asc' && <span onClick={() => { sortList('asc', name) }}>asc</span>}
-      {sortDirection !== 'desc' && <span onClick={() => { sortList('desc', name) }}> desc</span >}
-      <span onClick={() => { sortList('', name) }}> reset</span >
-    </>
-  )
+  const header = (name) => {
+
+    if (colName !== name || !colName) {
+      return (
+        <>
+          <span onClick={() => { sortList('asc', name) }}>asc</span>
+          <span onClick={() => { sortList('desc', name) }}> desc</span >
+        </>
+      )
+    }
+    return (
+      <>
+        {sortDirection !== 'asc' && <span onClick={() => { sortList('asc', name) }}>asc</span>}
+        {sortDirection !== 'desc' && <span onClick={() => { sortList('desc', name) }}> desc</span >}
+        <span onClick={() => { sortList('', name) }}> reset</span>
+      </>
+    )
+  }
 
   const newConfig = config.map(column => {
     if (!column.sortValue) {
