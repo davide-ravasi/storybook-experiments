@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import useSort from './useSort';
+
 import "./TableRef.css";
 
 export interface dataType {
@@ -28,36 +30,12 @@ const TableRef = ({ data, config }: ITableProps) => {
 
 const SortableTable = (props) => {
   const { config, data } = props;
-  const [sortDirection, setSortDirection] = useState('');
-  const [colName, setColName] = useState('');
-  const [dataList, setDataList] = useState([]);
-
-  useEffect(() => {
-    if (sortDirection === '') setDataList(data);
-  }, [sortDirection, data]);
-
-  const sortList = (order, colName) => {
-    setSortDirection(order);
-    setColName(colName);
-
-    if (order) {
-      const orderList = order === 'asc' ? 1 : -1;
-      const newDataList = [...dataList].sort((a, b) => {
-        if (typeof a[colName] === 'string') {
-          return a[colName].localeCompare(b[colName]) * orderList;
-        } else {
-          return (a[colName] - b[colName]) * orderList;
-        }
-      })
-
-      setDataList(newDataList);
-    }
-  }
+  const { sortOrder, sortBy, dataList, sortList } = useSort(data);
 
   // find a way to set col name
   const header = (name) => {
 
-    if (colName !== name || !colName) {
+    if (sortBy !== name || !sortBy) {
       return (
         <>
           <span onClick={() => { sortList('asc', name) }}>asc</span>
@@ -67,8 +45,8 @@ const SortableTable = (props) => {
     }
     return (
       <>
-        {sortDirection !== 'asc' && <span onClick={() => { sortList('asc', name) }}>asc</span>}
-        {sortDirection !== 'desc' && <span onClick={() => { sortList('desc', name) }}> desc</span >}
+        {sortOrder !== 'asc' && <span onClick={() => { sortList('asc', name) }}>asc</span>}
+        {sortOrder !== 'desc' && <span onClick={() => { sortList('desc', name) }}> desc</span >}
         <span onClick={() => { sortList('', name) }}> reset</span>
       </>
     )

@@ -10,7 +10,6 @@ const TeamOrganizer = ({ players }: ITeamOrganizer) => {
   const [team, setTeam] = useState("");
   const [player, setPlayer] = useState("");
 
-
   return (
     <div>
       <PlayerList players={players} setPlayer={setPlayer} />
