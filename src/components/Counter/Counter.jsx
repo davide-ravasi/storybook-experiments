@@ -2,6 +2,9 @@ import { useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "../../stories/Button";
 
+// always put the state even if we overload
+// all the fuctionalities in case we add some values
+// on the original state
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "INCREMENT":
@@ -18,7 +21,7 @@ const reducer = (state = initialState, action) => {
       });
     case "SUBMITINCREMENT":
       return Object.assign({}, state, {
-        counter: parseInt(action.payload),
+        counter: parseInt(state.counter) + parseInt(state.inputValue),
         inputValue: 0,
       });
     default:
@@ -54,7 +57,6 @@ export default function Counter({ color }) {
     e.preventDefault();
     dispatch({
       type: "SUBMITINCREMENT",
-      payload: parseInt(state.counter) + parseInt(state.inputValue),
     });
   };
 
