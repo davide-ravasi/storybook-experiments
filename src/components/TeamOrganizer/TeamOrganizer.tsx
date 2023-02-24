@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { setTextRange } from "typescript";
 
 import "./TeamOrganizer.css";
 
@@ -12,11 +13,14 @@ const TeamOrganizer = ({ players }: ITeamOrganizer) => {
   const [team1, setTeam1] = useState([]);
   const [team2, setTeam2] = useState([]);
 
-  // set team
-  // resset the teams
   // only five in every team max
   // random?
-  // 
+
+  const resetValues = () => {
+    setTeam1([]);
+    setTeam2([]);
+    setPlayersList(players);
+  }
 
   const setPlayerOnTeam = (player) => {
     if (team) {
@@ -26,16 +30,18 @@ const TeamOrganizer = ({ players }: ITeamOrganizer) => {
       if (team === 'team1') {
         const newTeam1 = [...team1, player];
         setTeam1(newTeam1);
+      } else {
+        const newTeam2 = [...team2, player];
+        setTeam2(newTeam2);
       }
 
-      const newTeam2 = [...team2, player];
-      setTeam2(newTeam2);
     }
   }
 
   return (
     <div>
       <PlayerList players={playersList} setPlayer={setPlayerOnTeam} />
+      <Buttons setTeam={setTeam} resetValues={resetValues} />
       <TeamList title="Team 1" team={team1} />
       <TeamList title="Team 2" team={team2} />
     </div>
@@ -68,6 +74,16 @@ const TeamList = ({ title, team }) => {
       </ul>
     </>
   );
+}
+
+const Buttons = ({ setTeam, resetValues }) => {
+  return (
+    <div className="buttons">
+      <button type="button" onClick={() => setTeam('team1')}>Team 1</button>
+      <button type="button" onClick={() => setTeam('team2')}>Team 2</button>
+      <button type="button" onClick={() => resetValues()}>Reset</button>
+    </div>
+  )
 }
 
 
